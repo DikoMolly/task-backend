@@ -6,19 +6,16 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const corsOptions = {
-  origin: [
-    "http://localhost:5173",
-    
-    
-    // Add your deployed frontend URL here if you have one
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: true, 
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,7 +26,7 @@ mongoose
 
 const userRoutes = require("./routes/userRoutes");
 
-// Use routes
+
 app.use("/api", userRoutes);
 
 app.use((err, req, res, next) => {
